@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -29,8 +30,7 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
     Button btn_signup, btn_signin;
     ImageView imageView;
-    FirebaseAuth mAuth;
-    FirebaseAuth finalMAuth = mAuth = FirebaseAuth.getInstance();
+
     ProgressBar pgbar;
 
 
@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
         pgbar = findViewById(R.id.progressBar);
         pgbar.setVisibility(View.INVISIBLE);
 
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+
 
         /*if (mAuth.getCurrentUser() != null) {
             startActivity(new Intent(getApplicationContext(), Home.class));
@@ -63,6 +66,13 @@ public class MainActivity extends AppCompatActivity {
                Intent j = new Intent(MainActivity.this, SignupActivity.class);
                startActivity(j);
            }*/
+//        @Override
+//        public void onStart() {
+//            super.onStart();
+//            // Check if user is signed in (non-null) and update UI accordingly.
+//            FirebaseUser currentUser = mAuth.getCurrentUser();
+//            updateUI(currentUser);
+//        }
         btn_signin.setOnClickListener(v -> {
             String email = mail.getText().toString().trim();
             String password = pwd.getText().toString().trim();
@@ -77,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 pwd.requestFocus();
                 return;
             } else {
-               pgbar.setVisibility(View.VISIBLE);
+                pgbar.setVisibility(View.VISIBLE);
 
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
